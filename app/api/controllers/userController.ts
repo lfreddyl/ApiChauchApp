@@ -8,20 +8,20 @@ import {
 } from "../responses/responseServices";
 import { Request, Response } from "express";
 import userService from "../services/userService";
-import * as nodemailer from 'nodemailer'; 
+import * as nodemailer from 'nodemailer';
 
 export class userController {
 
 
   private user_service: userService = new userService();
-  
+
   public create_user(req: Request, res: Response) {
     // this check whether all the filds were send through the erquest or not
     if (
       (req.body.nombres &&
         req.body.apellidos &&
         req.body.correo &&
-        req.body.password&&req.body.img) ||
+        req.body.password && req.body.img) ||
       req.body.telefono
     ) {
       //Comprobar si el correo ya esta registrado
@@ -37,9 +37,9 @@ export class userController {
               correo: req.body.correo,
               password: req.body.password,
               telefono: req.body.telefono,
-              img:req.body.img,
-              notificacion_leido:false,
-              mensaje_leido:false,
+              img: req.body.img,
+              notificacion_leido: false,
+              mensaje_leido: false,
             };
             this.user_service.createUser(
               user_params,
@@ -84,20 +84,20 @@ export class userController {
     }
   }
 
-  public enviarContrasenaCorreo(req: Request, res: Response){
-    var transporter = nodemailer.createTransport( 
+  public enviarContrasenaCorreo(req: Request, res: Response) {
+    var transporter = nodemailer.createTransport(
       {
         service: 'gmail',
         secure: false,
         port: 25,
         auth: {
-            user: 'orlanjack95@gmail.com',
-            pass: '4545645456'
+          user: 'orlanjack95@gmail.com',
+          pass: '4545645456'
         }
       }
-    ); 
+    );
     if (req.params.correo) {
-      
+
       const user_filter = { correo: req.params.correo };
       this.user_service.filterUser(
         user_filter,
@@ -105,38 +105,38 @@ export class userController {
           if (err) {
             mongoError(err, res);
           } else {
-            if(user_data===null){
+            if (user_data === null) {
               failureResponse("Usuario no encontrado, correo no enviado", null, res);
 
             }
-            else{
-              var mailOptions = { 
-                from : 'orlanjack95@gmail.com', 
-                to : req.params.correo, 
-                subject : 'Contrasena', 
-                text: 'Hola desde la plataforma de reciclamos, tu contrasena de acceso es: '+user_data.password 
-              }; 
-              transporter.sendMail( mailOptions, (error, info) => { 
-                if (error) { 
-                  return console.log(`error: ${error}`); 
-                } 
-                else{
+            else {
+              var mailOptions = {
+                from: 'orlanjack95@gmail.com',
+                to: req.params.correo,
+                subject: 'Contrasena',
+                text: 'Hola desde la plataforma de reciclamos, tu contrasena de acceso es: ' + user_data.password
+              };
+              transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                  return console.log(`error: ${error}`);
+                }
+                else {
                   successResponse("correo enviado", info.response, res);
 
                 }
-              }); 
+              });
             }
-            
+
           }
         }
       );
     } else {
       insufficientParameters(res);
     }
-    
- 
-    
-    
+
+
+
+
   }
   public findUserMovil(req: Request, res: Response) {
     if (req.params.movil) {
@@ -174,12 +174,12 @@ export class userController {
     }
   }
   public findUserNombres(req: Request, res: Response) {
-      var busquedaEncontrada=false
+    var busquedaEncontrada = false
     if (req.params.nombres.search(" ") != -1) {
       const cadenaBusqueda = req.params.nombres;
       var cadenaArray = cadenaBusqueda.split(" ");
-      const longitudArray=cadenaArray.length
-      if(longitudArray<=4){
+      const longitudArray = cadenaArray.length
+      if (longitudArray <= 4) {
         for (let index = 0; index < longitudArray; index++) {
 
           const user_filter = {
@@ -188,32 +188,32 @@ export class userController {
           this.user_service.filterUserAll(
             user_filter,
             (err: any, user_data: []) => {
-              
+
               if (err) {
                 mongoError(err, res);
               } else {
                 if (user_data.length > 0) {
                   console.log(user_data.length)
-                  busquedaEncontrada=true;
+                  busquedaEncontrada = true;
                   successResponse("get user successfull", user_data, res);
                   return;
-                  
+
                 } else {
-                  if(!busquedaEncontrada&&(index===longitudArray-1)){
+                  if (!busquedaEncontrada && (index === longitudArray - 1)) {
                     successResponse("get user successfull", [], res);
                     return;
-                  }  
+                  }
                 }
               }
             }
           );
         }
       }
-      else{
+      else {
         successResponse("get user successfull", [], res);
 
       }
-      
+
     } else {
       if (req.params.nombres) {
         const user_filter = {
@@ -260,17 +260,17 @@ export class userController {
     });
   }
 
-  public getNotificaciones(req: Request, res: Response){
+  public getNotificaciones(req: Request, res: Response) {
     if (req.params.id) {
 
-     const query = { _id: mongoose.Types.ObjectId(req.params.id) };
+      const query = { _id: mongoose.Types.ObjectId(req.params.id) };
       const queryagregate = [
-        
+
         { $match: query },
         {
-          $sort : {'notificaciones.fecha': 1 } 
-       },
-  
+          $sort: { 'notificaciones.fecha': 1 }
+        },
+
       ];
       this.user_service.filterUserAgregate(
         queryagregate,
@@ -289,17 +289,17 @@ export class userController {
 
   public update_user(req: Request, res: Response) {
     if (
-      (req.params.id ) ||
-      req.body.nombres||
+      (req.params.id) ||
+      req.body.nombres ||
       req.body.apellidos ||
       req.body.correo ||
       req.body.password ||
       req.body.direccion ||
       req.body.telefono ||
       req.body.delete ||
-      req.body.img||
-      req.body.notificaciones||
-      req.body.notificacion_leido||
+      req.body.img ||
+      req.body.notificaciones ||
+      req.body.notificacion_leido ||
       req.body.mensaje_leido
     ) {
       const user_filter = { _id: req.params.id };
@@ -332,7 +332,7 @@ export class userController {
                 : user_data.notificaciones,
               notificacion_leido: req.body.notificacion_leido,
               mensaje_leido: req.body.mensaje_leido
-                
+
 
             };
             this.user_service.updateUser(user_params, (err: any) => {
