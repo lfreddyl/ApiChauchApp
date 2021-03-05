@@ -3,10 +3,7 @@ import moongose from 'mongoose'
 const Schema= moongose.Schema
 
 export const notificacionesSchema= new Schema({
-    _id: {
-        type:String,
-        required:'El id es requerido',
-    },
+   
     descripcion:{
         type:String,
         required:'La descripcion es requerida'
