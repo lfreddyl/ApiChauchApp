@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import {notificacionesSchema} from '../models/Notificaciones'
-import {interfaceNotificaciones} from'../interfaces/interfaces'
+import {interfaceNotificaciones} from'../interfaces/notificaciones'
 
 const notificaciones= mongoose.model('notificaciones',notificacionesSchema);
 

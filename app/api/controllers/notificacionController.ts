@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { interfaceNotificaciones } from "../interfaces/interfaces";
+import { interfaceNotificaciones } from "../interfaces/notificaciones";
 import {
   insufficientParameters,
   mongoError,
