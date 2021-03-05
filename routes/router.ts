@@ -27,7 +27,7 @@ export class router{
     
         })
 
-        app.route('/users/:id')
+        app.route('/notificaciones/:id')
         .get((req: Request, res: Response) => {
             this.notificacionController.getNotificacion(req,res);
     
