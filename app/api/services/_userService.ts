@@ -27,7 +27,7 @@ export default class _userService {
     }
 
     public updateUser(user_params: _interfaceUsuario, callback: any) {
-        const query = { _id: user_params._id_usuario };
+        const query = { _id: user_params._id };
         _users.findOneAndUpdate(query, user_params, callback);
     }
 
