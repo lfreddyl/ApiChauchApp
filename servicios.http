@@ -1,0 +1,39 @@
+GET http://localhost:5000/
+
+### get servicios
+GET http://localhost:5000/publicaciones
+
+### create video
+POST http://localhost:5000/publicaciones
+Content-Type: application/json
+
+{
+  "nombre": "rolop3",
+  "categoria": ["Eventos","Musica"],
+  "descripcion": "Soy un Dj profecional con disponibilidad los fines de semana cuento con equipacion de un disco movil.",
+  "precio": 200,
+  "direccion":{
+      "provincia": "Chimborazo",
+      "ciudad": "Riobamba",
+      "calles": "9 de octubre y tarqui"  
+  },
+  "id_usuario": "054646rolip"
+}
+
+
+
+
+### GET Services
+GET http://localhost:5000/publicacionesByUser/604249f5261f912458cf383f
+
+### DELETE Services
+DELETE http://localhost:5000/publicaciones/60428e200bc65208c8c3b01c
+
+### UPDATE Services
+PUT http://localhost:5000/publicaciones/60423b2ced0a5d13cc14dcf8
+Content-Type: application/json
+
+{
+  "nombre": "esta es una prueba XD",
+  "precio": 145
+}
