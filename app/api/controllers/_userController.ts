@@ -126,7 +126,7 @@ export class _userController {
                         mongoError(err, res);
                     } else if (user_data) {
                         const user_params: _interfaceUsuario = {
-
+                            _id: req.params._id,
                             nombres: req.body.nombres ? req.body.nombres : user_data.nombres,
                             apellidos: req.body.apellidos ? req.body.apellidos : user_data.apellidos,
                             fecha_nacimiento: req.body.fecha_nacimiento ? req.body.fecha_nacimiento : user_data.fecha_nacimiento,

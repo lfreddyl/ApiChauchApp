@@ -1,5 +1,6 @@
 
 export interface _interfaceUsuario {
+    _id?: String,
     nombres: String,
     apellidos: String,
     fecha_nacimiento: Date,
