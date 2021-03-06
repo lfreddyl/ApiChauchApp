@@ -16,8 +16,8 @@ export default class notificacionesService{
     public filterNotificaciones(query: any, callback: any) {
         notificaciones.findOne(query, callback);
     }
-    public filterNotificacionesAll(query: any, callback: any) {
-        notificaciones.find(query, callback);
+    public filterNotificacionesAll(query: any,queryOder:any, callback: any) {
+        notificaciones.find(query, callback).sort(queryOder);
     }
     
     public filterNotificacionesAgregate(query: any, callback: any) {

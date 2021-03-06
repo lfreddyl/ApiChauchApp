@@ -26,7 +26,11 @@ export class router{
             this.notificacionController.createNotificacion(req,res);
     
         })
-
+        app.route('/notificacionesUsuario/:id_usuario')
+        .get((req: Request, res: Response) => {
+            this.notificacionController.getNotificacionUser(req,res);
+    
+        })
         app.route('/notificaciones/:id')
         .get((req: Request, res: Response) => {
             this.notificacionController.getNotificacion(req,res);

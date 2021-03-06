@@ -27,4 +27,4 @@ export const notificacionesSchema= new Schema({
     id_publicacion:{
         type:Schema.Types.ObjectId, ref:'publicaciones', required:'El id de la publicacion es requerido'
     }
-})
+},{ versionKey: false });

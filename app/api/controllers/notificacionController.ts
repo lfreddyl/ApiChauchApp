@@ -58,6 +58,28 @@ export class notificacionController {
         (err: any, notificacionData: interfaceNotificaciones) => {
           if (err) {
             mongoError(err, res);
+          }  else if (notificacionData!==null) {
+            successResponse("Registro correctamente", notificacionData, res);
+          } else {
+            failureResponse("El registro no se encuentra", null, res);
+          }
+        }
+      );
+    } else {
+      insufficientParameters(res);
+    }
+  }
+
+
+  public getNotificacionUser(req: Request, res: Response) {
+    if (req.params.id_usuario) {
+      const query = { id_usuario: mongoose.Types.ObjectId(req.params.id_usuario),leido:false };
+      const queryOrder = {fecha:-1 }
+      this.servicioNotificaciones.filterNotificacionesAll(
+        query,queryOrder,
+        (err: any, notificacionData: interfaceNotificaciones) => {
+          if (err) {
+            mongoError(err, res);
           } else {
             successResponse("Registro encontrado exitosamente", notificacionData, res);
           }
@@ -67,7 +89,6 @@ export class notificacionController {
       insufficientParameters(res);
     }
   }
-
   public getAllNotificaciones( res: Response) {
     
       const query = { };
@@ -95,7 +116,8 @@ export class notificacionController {
         req.body.fecha &&
         req.body.tipo &&
         req.body.id_usuario &&
-        req.body.id_publicacion
+        req.body.id_publicacion||
+        req.body.leido
     ) {
       const user_filter = { _id: req.params.id };
       this.servicioNotificaciones.filterNotificaciones(
@@ -121,9 +143,10 @@ export class notificacionController {
               id_publicacion: req.body.id_publicacion
                 ? req.body.id_publicacion
                 : notificacionData.id_publicacion,
-                leido: req.body.leido
-                ? req.body.leido
-                : notificacionData.leido,
+              leido: req.body.leido || !req.body.leido
+                ?req.body.leido
+                :notificacionData.leido
+               
             };
             this.servicioNotificaciones.updateNotificaciones(paramsNotificaciones, (err: any) => {
               if (err) {
