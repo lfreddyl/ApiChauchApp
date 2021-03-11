@@ -8,8 +8,8 @@ POST http://localhost:5000/publicaciones
 Content-Type: application/json
 
 {
-  "nombre": "rolop3",
-  "categoria": ["Eventos","Musica"],
+  "nombre": "Carlos Tacury Guamen",
+  "categoria": ["Eventos","Musica","locop"],
   "descripcion": "Soy un Dj profecional con disponibilidad los fines de semana cuento con equipacion de un disco movil.",
   "precio": 200,
   "direccion":{
@@ -27,13 +27,17 @@ Content-Type: application/json
 GET http://localhost:5000/publicacionesByUser/604249f5261f912458cf383f
 
 ### DELETE Services
-DELETE http://localhost:5000/publicaciones/60428e200bc65208c8c3b01c
+DELETE http://localhost:5000/publicaciones/604a5d1c21b5d42ac4cb1aff
 
 ### UPDATE Services
-PUT http://localhost:5000/publicaciones/60423b2ced0a5d13cc14dcf8
+PUT http://localhost:5000/publicaciones/604a5d1c21b5d42ac4cb1aff
 Content-Type: application/json
 
 {
-  "nombre": "esta es una prueba XD",
-  "precio": 145
+ "direccion":{
+      "provincia": "Tunguragua",
+      "ciudad": "Ambato",
+      "calles": "9 de octubre y tarqui"  
+  },
+  "categoria": ["Casa","jojo","jajaj"]
 }

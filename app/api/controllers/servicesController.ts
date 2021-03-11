@@ -33,6 +33,7 @@ export class publicacionController {
         descripcion: req.body.descripcion,
         precio: req.body.precio,
         disponibilidad: req.body.disponibilidad,
+        direccion:req.body.direccion,
         fecha: req.body.fecha,
         id_usuario: req.body.id_usuario
       };
@@ -424,6 +425,7 @@ export class publicacionController {
                 : publicacion_data.descripcion,
               precio: req.body.precio ? req.body.precio : publicacion_data.precio,
               disponibilidad: req.body.disponibilidad ? req.body.disponibilidad : publicacion_data.disponibilidad,
+              direccion:req.body.direccion ? req.body.direccion : publicacion_data.direccion,
               fecha: req.body.fecha
                 ? req.body.fecha
                 : publicacion_data.fecha,
